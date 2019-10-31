@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bgimage">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bgtrans">
+
+        <!--<customfonts.MyTextView-->
+        <!--android:id="@+id/signin"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="SIGN IN"-->
+        <!--android:textSize="25dp"-->
+        <!--android:textColor="#54abee"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="45dp"-->
+        <!--/>-->
+
+
+        <!--<customfonts.MyTextView-->
+            <!--android:id="@+id/acc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Already have an account?"-->
+            <!--android:textSize="16dp"-->
+            <!--android:textColor="#c4c5c9"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_above="@id/signin"-->
+            <!--android:paddingBottom="16dp"-->
+            <!--/>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="95dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            />
+     </RelativeLayout>
+
+</FrameLayout>

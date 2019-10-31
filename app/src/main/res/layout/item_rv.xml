@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/get"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect1"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:padding="10dp"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="1dp">
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/rect1"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/img_sign"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/bag"
+                    android:paddingLeft="3dp"
+                    android:layout_gravity="center"
+                    />
+
+
+            </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <customfonts.MyTextView
+            android:id="@+id/txtsign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="الحمل"
+            android:textColor="#fff"
+            android:textSize="22dp" />
+
+        <customfonts.MyTextView
+            android:id="@+id/txtdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="(Jul 22 - Aug 22)"
+            android:textColor="#fff"
+            android:textSize="22dp" />
+
+
+    </LinearLayout>
+
+        </LinearLayout>
