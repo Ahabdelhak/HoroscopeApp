@@ -1,83 +1,101 @@
 package com.example.webserv;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
+    private Sign_Model[] listdata;
 
-    private List<String> mData;
-    private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private Context context;
 
-    // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context, List<String> data) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+
+    SharedPreferences pref ;
+
+    // RecyclerView recyclerView;
+    public MyRecyclerViewAdapter(Sign_Model[] listdata, Context context) {
+        this.listdata = listdata;
+        this.context = context;
     }
-
-    // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_rv, parent, false);
-        return new ViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View listItem= layoutInflater.inflate(R.layout.item_rv, parent, false);
+        ViewHolder viewHolder = new ViewHolder(listItem);
+
+        pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
+
+        return viewHolder;
     }
 
-    // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final Sign_Model myListData = listdata[position];
+        holder.txtSign.setText(listdata[position].getSign());
+        holder.txt_date.setText(listdata[position].getDate());
+        holder.imageView.setImageResource(listdata[position].getImgId());
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"click on item: "+myListData.getSign() + "Name " + listdata[position].getSign_eng_name(),Toast.LENGTH_LONG).show();
 
-        holder.myTextView.setText(animal);
-        Picasso.get().load(R.drawable.aries).placeholder(R.drawable.ic_launcher_background).into(holder.img_sign);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("signName", listdata[position].getSign()); // Storing string
+                editor.putString("signNameEng", listdata[position].getSign_eng_name()); // Storing string
+                editor.commit(); // commit changes
+
+
+
+                Intent intent =new Intent(context,Chooce_Daily_Mon.class);
+
+                intent.putExtra("signName",listdata[position].getSign());
+                intent.putExtra("signNameEng",listdata[position].getSign_eng_name());
+
+
+                Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), listdata[position].getImgId()); // your bitmap
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
+                intent.putExtra("signImage", bs.toByteArray());
+
+                //intent.putExtra("signImage",listdata[position].getImgId());
+                context.startActivity(intent);
+            }
+        });
     }
 
-    // total number of rows
+
     @Override
     public int getItemCount() {
-        return mData.size();
+        return listdata.length;
     }
 
-
-    // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
-        ImageView img_sign;
-
-        ViewHolder(View itemView) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView imageView;
+        public TextView txtSign,txt_date;
+        public LinearLayout linearLayout;
+        public ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.txtsign);
-            img_sign=itemView.findViewById(R.id.img_sign);
-            itemView.setOnClickListener(this);
+            this.imageView = (ImageView) itemView.findViewById(R.id.img_sign);
+            this.txtSign = (TextView) itemView.findViewById(R.id.txtsign);
+            this.txt_date = (TextView) itemView.findViewById(R.id.txtdate);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.ln);
         }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-        }
-    }
-
-    // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id);
-    }
-
-    // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 }
